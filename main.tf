@@ -28,7 +28,7 @@ resource "aws_security_group" "eks_worker_sg" {
 
 resource "aws_eks_cluster" "eks_cluster" {
   name     = "my-eks-cluster"
-  role_arn = "arn:aws:iam::123456789012:role/eks-service-role"
+##  role_arn = "arn:aws:iam::123456789012:role/eks-service-role"
 ##replace the 123456789012 with your account number
   vpc_config {
     subnet_ids = [
