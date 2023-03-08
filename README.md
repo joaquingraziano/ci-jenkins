@@ -11,17 +11,16 @@ Also make sure you have localstack running in a separate terminal. With the foll
 ```
 docker run --rm -it -p 4566:4566 -p 4510-4559:4510-4559 localstack/localstack
 ```
-Then
+Then, move into folder, download resources with init and plan to check if everything is okey
 ```
 cd webdemo
 terraform init
 terraform plan
 ```
-terraform plan to check if everything is okey
+add --auto-approve to ignore the confirmation prompt or simply leave it out and when prompted for confirmation answer yes
 ```
 terraform apply --auto-approve
 ```
-add --auto-approve to ignore the confirmation prompt or simply leave it out and when prompted for confirmation answer yes
 With this you may have deployed the infrastructure. You can check the status of the infrastructure with...
 ```
 terraform show
