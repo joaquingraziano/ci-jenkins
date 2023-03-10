@@ -5,7 +5,7 @@ git clone https://github.com/Jiolloker/webdemo.git
 ```
 You can also clone a specific branch
 ```
-git clone -b terraform https://github.com/Jiolloker/webdemo.git
+git clone -b terraform_test https://github.com/Jiolloker/webdemo.git
 ```
 Also make sure you have localstack running in a separate terminal. With the following command you can run a dockerized localstack with the listening ports already configured.
 ```
