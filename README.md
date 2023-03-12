@@ -28,6 +28,7 @@ input secret key
 input region
 input format
 vim ~/.aws/credentials  # check your credentials
+on provider.tf change the profile_name for yours
 ```
 
 ## To deploy the infrastructure
