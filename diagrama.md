@@ -34,4 +34,4 @@
 
 #### Diagrama
 
-![DiagramaEKS](/webdemo/img/diagramaEks.png)
+![DiagramaEKS](/img/diagramaEks.png)
