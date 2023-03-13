@@ -53,8 +53,8 @@ terraform apply --auto-approve
 With this you may have deployed the infrastructure. You can check the status of the infrastructure with...
 ```
 terraform show
+rm ~/.kube/config
 aws eks update-kubeconfig --name eks-webdemo --alias eks-webdemo --region us-east-1 --profile profilename
-kubectl get pods
 kubectl get nodes
 
 ```
