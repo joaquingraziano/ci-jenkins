@@ -18,6 +18,7 @@
 
 **BD:** Se crean 2 instancias de RDS en diferentes AZ, una para escritura y otra para lectura,lo que permitiría que los datos se repliquen automáticamente de la instancia de escritura a la instancia de lectura. De esta manera, si una de las zonas de disponibilidad falla, la base de datos seguirá estando disponible en la otra zona. Para la BD se utiliza NLB  este funciona a nivel de conexion TCP/IP lo que permite manejar grandes cantidades de trafico y proporcionar baja latencia. , tambien con NLB se puede equilibrar carga entre varias instancias de RDS en distintas AZ.
 
+**NG:** Se agregan natgateways para comunicacion con instancia ec2
 
 **Workers nodes:** Utilizan el mismo NLB que la base de datos.
 
@@ -34,4 +35,4 @@
 
 #### Diagrama
 
-![DiagramaEKS](/img/diagramaEks.png)
+![DiagramaEKS](/img/diagrama-1403.jpg)
