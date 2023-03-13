@@ -43,11 +43,14 @@ git clone -b terraform_test https://github.com/Jiolloker/webdemo.git
 Move into folder, download resources with init and plan to check if everything is okey
 ```
 cd webdemo
+cd into the workspace folder of your choice
 terraform init
 terraform plan
 ```
 add --auto-approve to ignore the confirmation prompt or simply leave it out and when prompted for confirmation answer yes
 ```
+get into the different workspaces with ..
+terraform workspace new dev  #change into dev, prod or staging and then
 terraform apply --auto-approve
 ```
 With this you may have deployed the infrastructure. You can check the status of the infrastructure with...
