@@ -31,6 +31,7 @@ vim ~/.aws/credentials  # check your credentials
 on provider.tf change the profile_name for yours
 ```
 
+
 ## To deploy the infrastructure
 First clone the repository and move into de repository
 ```
@@ -61,3 +62,6 @@ aws eks update-kubeconfig --name eks-webdemo --alias eks-webdemo --region us-eas
 kubectl get nodes
 
 ```
+
+## Link a la presentacion en proceso.
+https://docs.google.com/presentation/d/1eE2JTty0yak0BQDvE48MWC0hFd_LResiptOVYJAdJck/edit#slide=id.g21a97ba0fc6_0_130
