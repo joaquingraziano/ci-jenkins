@@ -58,7 +58,7 @@ With this you may have deployed the infrastructure. You can check the status of 
 ```
 terraform show
 rm ~/.kube/config
-aws eks update-kubeconfig --name eks-webdemo --alias eks-webdemo --region us-east-1 --profile profilename
+aws eks update-kubeconfig --name prod-eks-webdemo --alias prod-eks-webdemo --region us-east-1 --profile profilename
 kubectl get nodes
 
 ```
