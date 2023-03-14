@@ -60,8 +60,27 @@ terraform show
 rm ~/.kube/config
 aws eks update-kubeconfig --name prod-eks-webdemo --alias prod-eks-webdemo --region us-east-1 --profile profilename
 kubectl get nodes
+```
+After that, we can deploy a testing nginx server to check if we can get something from the cluster
+```
+kubectl apply -f namespace.yaml
+kubectl apply -f deployment.yaml -n nginx
+kubectl apply -f service.yaml -n nginx
+```
+Check if everything is running
+```
+kubectl get pods -n nginx
+kubectl get svc -n nginx
+```
+Copy the External_ip displayed in the service to try a curl, you should see nginx welcome page.
+```
+curl http://<nginx-service-ip>
 
 ```
-
+##Destroy the infrastructure
+```
+kubectl delete namespace nginx
+terraform destroy --auto-approve
+```
 ## Link a la presentacion en proceso.
 https://docs.google.com/presentation/d/1eE2JTty0yak0BQDvE48MWC0hFd_LResiptOVYJAdJck/edit#slide=id.g21a97ba0fc6_0_130
