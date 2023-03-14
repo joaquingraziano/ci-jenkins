@@ -49,9 +49,9 @@ Este ConfigMap se utiliza para almacenar la configuración de Nginx, que se util
 
 ```bash
 kubectl create namespace curlnginx
-kubectl apply -f nginx-deployment.yml -n curlnginx
-kubectl apply -f nginx-service.yml -n curlnginx
-kubectl apply -f nginx-config.yml -n curlnginx
+kubectl apply -f deployment.yml -n curlnginx
+kubectl apply -f service.yml -n curlnginx
+kubectl apply -f config.yml -n curlnginx
 ```
 
 #### Verificar funcionamiento
