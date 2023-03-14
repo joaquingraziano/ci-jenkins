@@ -1,4 +1,4 @@
-resource "aws_instance" "jenkins" {
+resource "aws_instance" "prod-jenkins" {
   ami           = "ami-005f9685cb30f234b"
   instance_type = "t2.micro"
   key_name      = "my_key_pair"
