@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "c310288a-d2d9-4d0f-ae25-65efeb928734",
+		"name": "store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"testStore3\",\n    \"description\": \"Orden de compra\",\n    \"address\": \"Guido Spano 3169\",\n    \"products\": [\n        {\n        \"name\": \"Samsung S23\",\n        \"price\": 99,\n        \"description\": \"Celular 5G\"\n        },\n        {\n        \"name\": \"Iphone 14 Pro\",\n        \"price\": 999,\n        \"description\": \"Celular 5G\" \n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/store/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/store",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/store/6407d83f37770582ed341595",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store",
+						"6407d83f37770582ed341595"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getIdByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/store/testStore3/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store",
+						"testStore3",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductByStore",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/store/6406bec659e69e6505fce1c6/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"store",
+						"6406bec659e69e6505fce1c6",
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
