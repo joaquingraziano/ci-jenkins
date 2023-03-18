@@ -7,18 +7,7 @@ pipeline {
   
   agent any
   stages {
-    //Inicia Stage Build
-    stage('build Image') {
-      steps {
-        echo 'Haciendo el Build de la app'
-        script {
-          dir('cicd/app-devops-bootcamp/api-store') {
-            docker.build registry + ":v1.$BUILD_NUMBER"
-          }
-        } 
-      }
-    }
-    //Finaliza Stage Build
+
     //Empieza Test
     stage('Test') {
       steps {
@@ -32,6 +21,20 @@ pipeline {
     }
         
     //Finaliza test
+    
+    //Inicia Stage Build
+    stage('build Image') {
+      steps {
+        echo 'Haciendo el Build de la app'
+        script {
+          dir('cicd/app-devops-bootcamp/api-store') {
+            docker.build registry + ":v1.$BUILD_NUMBER"
+          }
+        } 
+      }
+    }
+    //Finaliza Stage Build
+    
     //Inicia Stage Push
     stage('Push Image') {
       steps {
