@@ -1,11 +1,15 @@
-FROM node:14-alpine
+FROM node:14-alpine AS build 
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+RUN npm run build 
+
+FROM nginx:1.21-alpine AS production 
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
 
 #docker build -t backend-devops:v3 .
-#docker run -p 3000:3000 backend-devops:v3
+#docker run -p 80:80 backend-devops:v3
