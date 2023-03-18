@@ -37,7 +37,7 @@ pipeline {
           }
         }
       }
-    }*/
+    }
     //Finaliza Stage Push
     stage('Cleaning Image') {
       steps{
