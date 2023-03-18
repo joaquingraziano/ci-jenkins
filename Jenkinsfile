@@ -10,7 +10,7 @@ pipeline {
     //Inicia Stage Build
     stage('build Image') {
       steps {
-        sh 'cd api-store'
+        sh 'cd cicd/api-store'
         echo 'Haciendo el Build de la app'
         script {
           docker.build registry + ":v1.$BUILD_NUMBER"
