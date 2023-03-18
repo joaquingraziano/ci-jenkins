@@ -10,11 +10,11 @@ pipeline {
     //Inicia Stage Build
     stage('build Image') {
       steps {
-        sh 'ls'
+        sh 'cd api-store'
         echo 'Haciendo el Build de la app'
-        /*script {
+        script {
           docker.build registry + ":v1.$BUILD_NUMBER"
-        } */ 
+        } 
       }
     }
     //Finaliza Stage Build
@@ -28,7 +28,7 @@ pipeline {
         
   */
     //Inicia Stage Push
-    /*stage('Push Image') {
+    stage('Push Image') {
       steps {
         echo 'Haciendo un Push a la registry de docker'
         script {
@@ -39,11 +39,11 @@ pipeline {
       }
     }*/
     //Finaliza Stage Push
-    /*stage('Cleaning Image') {
+    stage('Cleaning Image') {
       steps{
       sh "docker rmi $registry:v1.$BUILD_NUMBER"
       sh "docker rmi registry.hub.docker.com/$registry:v1.$BUILD_NUMBER"
       }
-    }*/
+    }
   }
 }
