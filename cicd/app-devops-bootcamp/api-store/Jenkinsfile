@@ -18,17 +18,20 @@ pipeline {
         } 
       }
     }
-  
     //Finaliza Stage Build
-/*falta probar
-   stage('Test') {
-          steps {
+    //Empieza Test
+    stage('Test') {
+      steps {
                 // Ejecuta tus pruebas en la imagen Docker construida anteriormente
-                sh 'docker run backend:v1 npm test'
+                //sh 'docker run backend:v1 npm test'
+        script {
+          dir('cicd/app-devops-bootcamp/api-store') {
+            sh 'npm run test'
+          }
             }
           }
         
-  */
+    //Finaliza test
     //Inicia Stage Push
     stage('Push Image') {
       steps {
@@ -41,11 +44,13 @@ pipeline {
       }
     }
     //Finaliza Stage Push
+    //Empieza Limpieza
     stage('Cleaning Image') {
       steps{
       sh "docker rmi $registry:v1.$BUILD_NUMBER"
       sh "docker rmi registry.hub.docker.com/$registry:v1.$BUILD_NUMBER"
       }
     }
+    //Finaliza Limpieza
   }
 }
