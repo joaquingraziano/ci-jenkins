@@ -22,14 +22,13 @@ pipeline {
     //Empieza Test
     stage('Test') {
       steps {
-                // Ejecuta tus pruebas en la imagen Docker construida anteriormente
-                //sh 'docker run backend:v1 npm test'
-        script {
+         script {
           dir('cicd/app-devops-bootcamp/api-store') {
             sh 'npm run test'
           }
-            }
-          }
+        }
+      }
+    }
         
     //Finaliza test
     //Inicia Stage Push
@@ -53,5 +52,4 @@ pipeline {
     }
     //Finaliza Limpieza
   }
-}
 }
