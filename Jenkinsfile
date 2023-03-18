@@ -10,7 +10,7 @@ pipeline {
     //Inicia Stage Build
     stage('build Image') {
       steps {
-        sh 'cd cicd/api-store'
+        sh 'cd cicd/app-devops-bootcamp/api-store/'
         echo 'Haciendo el Build de la app'
         script {
           docker.build registry + ":v1.$BUILD_NUMBER"
