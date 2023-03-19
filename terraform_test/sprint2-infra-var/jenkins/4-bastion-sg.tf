@@ -1,4 +1,4 @@
-# Security Group for Public Bastion Host
+/*# Security Group for Public Bastion Host
 module "public_bastion_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.18.0"
@@ -18,3 +18,32 @@ module "public_bastion_sg" {
   }  
 }
 
+*/
+
+resource "aws_security_group" "jenkins_sg" {
+  name_prefix = "jenkins_sg_"
+  description = "Security group for Jenkins EC2 instance"
+
+  vpc_id = module.vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 8080
+    to_port   = 8080
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
