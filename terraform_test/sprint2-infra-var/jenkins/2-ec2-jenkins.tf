@@ -19,23 +19,24 @@ module "ec2_instance" {
     }
   ]
   ## aqui poner el userdata para instalar jenkins
-  user_data = <<EOF
-  #!/bin/bash
-  sudo apt update -y
-  sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-  apt-cache policy docker-ce
-  sudo apt install docker-ce -y
-  sudo systemctl enable docker
-  sudo systemctl start docker
-  sudo usermod -aG docker ubuntu
-  sudo docker run -d -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
-  EOF
+  user_data = <<-EOF
+    #!/bin/bash
+    sudo apt update -y
+    sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    apt-cache policy docker-ce
+    sudo apt install docker-ce -y
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    sudo usermod -aG docker ubuntu
+    sudo docker run -d -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+    EOF
   /*
   access docker container logs for jenkins
   sudo docker ps
   sudo docker logs -f <container id>
+  sudo docker exec -it <container id> cat /var/jenkins_home/secrets/initialAdminPassword
   */
   tags = {
     "Terraform"     = "true"
