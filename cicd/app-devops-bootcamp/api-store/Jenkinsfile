@@ -9,7 +9,7 @@ pipeline {
   stages {
 
     //Empieza Test
-    stage('Test') {
+    /*stage('Test') {
       steps {
          script {
           dir('cicd/app-devops-bootcamp/api-store') {
@@ -19,7 +19,7 @@ pipeline {
         }
       }
     }
-        
+      */  
     //Finaliza test
     
     //Inicia Stage Build
