@@ -3,7 +3,7 @@
 
 **Objetivos:** El objetivo de este sprint es poder armar un pipeline CI/CD en donde se clone el proyecto, se haga un build de la imagen, se hagan los testeos y luego se haga un push al registry de dockerhub.
 
-Tareas:
+### Tareas:
 
 - Crear dockerfile
 - Crear Jenkinsfile
@@ -11,6 +11,18 @@ Tareas:
 - Verificar funcionamiento 
 - Armar presentacion PPT con screens (Se adjunta dentro de proyecto)
 
+<br>
+
+#### Recursos
+
+- Repositorio: https://github.com/Jiolloker/webdemo
+
+- Trello: https://trello.com/b/JbAH6f8t/webservicedemo
+
+- Diagrama: https://github.com/Jiolloker/webdemo/tree/master/cicd/app-devops-bootcamp
+
+
+<br>
 
 #### Estructura del proyecto app-devops-bootcamp
 
