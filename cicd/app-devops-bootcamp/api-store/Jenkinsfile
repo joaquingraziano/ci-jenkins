@@ -7,7 +7,7 @@ pipeline {
   
   agent any
   stages {
-//1
+
     //Empieza Test
     stage('Test') {
       steps {
