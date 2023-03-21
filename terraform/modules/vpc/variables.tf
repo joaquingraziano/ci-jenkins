@@ -45,11 +45,11 @@ variable "environment" {
   description = "Environment for the VPC"
   type        = string
 }
-
+/*
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-}
+}*/
 
 variable "vpc_create_igw" {
   description = "Create Internet Gateway for the VPC"
