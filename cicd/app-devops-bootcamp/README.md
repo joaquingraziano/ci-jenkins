@@ -19,7 +19,7 @@
 
 - Trello: https://trello.com/b/JbAH6f8t/webservicedemo
 
-- Diagrama: https://github.com/Jiolloker/webdemo/tree/master/cicd/app-devops-bootcamp
+- Proyecto CI/CD: https://github.com/Jiolloker/webdemo/tree/master/cicd/app-devops-bootcamp
 
 
 <br>
