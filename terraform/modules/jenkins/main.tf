@@ -56,6 +56,21 @@ module "ec2_instance" {
   sudo docker ps
   sudo docker logs -f <container id>
   docker exec -it <container id> cat /var/lib/jenkins/secrets/initialAdminPassword
+  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+  install docker pluggins
+  manage credentials
+  create pipeline
+  install dependencies for testing and building
+  #!/bin/bash
+  sudo apt install npm -y
+  sudo npm install -g n 
+  sudo n lts
+  sudo npm install -g jest
+  sudo npm install jest --save-dev
+  sudo npm install --save-dev ts-jest
+  sudo npm install --save-dev @types/jest
+
   */
   tags = {
     Terraform     = "true"
