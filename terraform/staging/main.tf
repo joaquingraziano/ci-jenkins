@@ -28,7 +28,6 @@ module "ec2_instance" {
 
 module "eks" {
   source                          = "../modules/eks"
-  depends_on                      = [module.vpc]
   cluster_name                    = var.cluster_name
   cluster_version                 = var.cluster_version
   cluster_endpoint_private_access = var.cluster_endpoint_private_access
@@ -36,4 +35,7 @@ module "eks" {
   vpc_id                          = module.vpc.vpc_id
   subnet_id                       = module.vpc.private_subnets_ids
   environment                     = var.environment
+  aws_profile                     = var.aws_profile
+  aws_region                      = var.aws_region
 }
+

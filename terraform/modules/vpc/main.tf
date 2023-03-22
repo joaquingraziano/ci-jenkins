@@ -13,7 +13,7 @@ module "vpc" {
   enable_dns_hostnames = var.vpc_enable_dns_hostnames
 
   ##uncomment the following lines to add tags to the subnets for kubernetes
-/*
+
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                    = "1"
@@ -22,7 +22,7 @@ module "vpc" {
   private_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"           = "1"
-  }*/
+  }
   tags = {
     "Terraform"   = "true"
     "Environment" = var.environment

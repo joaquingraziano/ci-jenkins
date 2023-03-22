@@ -35,3 +35,12 @@ variable "cluster_endpoint_public_access" {
 }
 
 
+variable "aws_profile" {
+  description = "AWS profile to use"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "AWS region to use"
+  type        = string
+}
