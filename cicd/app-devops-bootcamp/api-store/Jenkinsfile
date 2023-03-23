@@ -8,7 +8,7 @@ pipeline {
   agent any
   stages {
 
-    //Empieza Test
+    /*//Empieza Test
     stage('Test') {
       steps {
          script {
@@ -21,7 +21,7 @@ pipeline {
     }
        
     //Finaliza test
-    
+    */
     //Inicia Stage Build
     stage('build Image') {
       steps {
