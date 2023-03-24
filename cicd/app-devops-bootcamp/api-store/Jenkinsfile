@@ -34,6 +34,22 @@ pipeline {
       }
     }
     //Finaliza Stage Build
+    //Inicia Stage change tag
+    stage('Change tag to deployment.yaml') {
+      steps {
+        echo 'Cambiando el tag de la imagen en el deployment.yaml'
+        script {
+          dir('manifiestos-eks/dev') {
+            sh '''
+              sed -i "s/fcambres\/webdemo:v[0-9]\+\.[0-9]\+/fcambres\/webdemo:$BUILD_NUMBER/g" deployment.yml
+              git add deployment.yml
+              git commit -m "Update image tag to $BUILD_NUMBER"
+              git push
+            '''
+          }
+        }
+      }
+    }
     
     //Inicia Stage Push
     stage('Push Image') {
@@ -57,3 +73,4 @@ pipeline {
     //Finaliza Limpieza
   }
 }
+
