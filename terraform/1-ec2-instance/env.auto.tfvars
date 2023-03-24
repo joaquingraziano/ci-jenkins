@@ -11,7 +11,7 @@ vpc_create_igw         = true
 ## EC2 Instance
 ec2_associate_public_ip_address = true
 ami                             = "ami-0557a15b87f6559cf"
-instance_type                   = "t3.small"
+instance_type                   = "t3.medium"
 key_name                        = "my_key_pair"
 ec2_environment                 = "dev"
 monitoring                      = false

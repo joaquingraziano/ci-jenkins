@@ -31,6 +31,13 @@ module "ec2_instance" {
     sudo systemctl enable docker
     sudo systemctl start docker
     sudo usermod -aG docker ubuntu
+    newgrp docker
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    curl -LJO https://raw.githubusercontent.com/Jiolloker/webdemo/master/terraform/modules/jenkins/docker-compose.yaml
+    docker-compose up -d
+    EOF
+  /*
     sudo apt install default-jre -y
     sudo wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
     sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list' -y
@@ -40,9 +47,10 @@ module "ec2_instance" {
     sudo usermod -aG docker jenkins
     sudo systemctl start jenkins
     sudo npm install -g ts-jest
-    newgrp docker
-    EOF
-  /*
+
+
+
+
   docker run -p 8080:8080 -p 50000:50000 -d -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts 
   docker run -d -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
   access docker container logs for jenkins
