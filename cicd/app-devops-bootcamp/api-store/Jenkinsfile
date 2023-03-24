@@ -3,6 +3,7 @@ pipeline {
     registry = "fcambres/webdemo"
     registryCredential = 'dockerhub_id'
     dockerImage = ''
+    NODE_VERSION = '16'
   }
   
   agent {
@@ -10,9 +11,6 @@ pipeline {
       image 'jiolloker/webdemo-jenkins:latest'
       args '-u root' // Optional: run the container as root
     }
-  }
-  environment {
-    NODE_VERSION = '16'
   }
   stages {
 
