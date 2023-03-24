@@ -7,9 +7,12 @@ pipeline {
   
   agent {
     docker {
-      image 'node:lts-bullseye-slim'
-      args '-p 3000:3000'
+      image 'jiolloker/webdemo-jenkins:latest'
+      args '-u root' // Optional: run the container as root
     }
+  }
+  environment {
+    NODE_VERSION = '16'
   }
   stages {
 
