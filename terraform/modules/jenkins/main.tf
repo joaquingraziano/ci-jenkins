@@ -63,7 +63,7 @@ module "ec2_instance" {
 
   sudo docker ps
   sudo docker logs -f <container id>
-  docker exec -it <container id> cat /var/lib/jenkins/secrets/initialAdminPassword
+  docker exec -it <container id> cat /var/jenkins_home/secrets/initialAdminPassword
   sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
   install docker pluggins

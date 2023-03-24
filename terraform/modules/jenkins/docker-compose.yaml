@@ -18,8 +18,8 @@ services:
     ports:
       - "2376:2376"
   jenkins:
-    image: jenkinsci/blueocean
-    container_name: jenkins_blueocean
+    image: jenkins/jenkins:latest
+    container_name: jenkins
     restart: always
     networks:
       - jenkins
