@@ -49,10 +49,12 @@ pipeline {
               git commit -m \"Update image tag to $BUILD_NUMBER\"
               git push origin master
             '''
+            } 
           }
         }
       }
     }
+
     
     //Inicia Stage Push
     stage('Push Image') {
