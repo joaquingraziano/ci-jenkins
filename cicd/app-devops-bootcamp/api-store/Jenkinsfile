@@ -44,9 +44,9 @@ pipeline {
             sh '''
               git config --global user.email "jiolloker@example.com"
               git config --global user.name "jiolloker"
-              sed -i "s/fcambres\/webdemo:v[0-9]\+\.[0-9]\+/fcambres\/webdemo:$BUILD_NUMBER/g" deployment.yml
+              ssed -i \"s/fcambres\\/webdemo:v[0-9]\\+\\.[0-9]\\+/fcambres\\/webdemo:$BUILD_NUMBER/g\" deployment.yml
               git add deployment.yml
-              git commit -m "Update image tag to $BUILD_NUMBER"
+              git commit -m \"Update image tag to $BUILD_NUMBER\"
               git push origin master
             '''
           }
