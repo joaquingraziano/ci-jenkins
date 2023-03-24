@@ -5,7 +5,12 @@ pipeline {
     dockerImage = ''
   }
   
-  agent any
+  agent {
+    docker {
+      image 'node:lts-bullseye-slim'
+      args '-p 3000:3000'
+    }
+  }
   stages {
 
     //Empieza Test
@@ -40,15 +45,17 @@ pipeline {
         echo 'Cambiando el tag de la imagen en el deployment.yaml'
         withCredentials([gitUsernamePassword(credentialsId: 'my-git-user', gitToolName: 'git-tool')]) {
         script {
+          def json = sh(script: 'curl -s https://hub.docker.com/v2/repositories/fcambres/webdemo/tags/', returnStdout: true)
+          def tags = readJSON(text: json).results.name
+          def latest = tags[0]
+          echo "La última versión de la imagen es: ${latest}"
           dir('manifiestos-eks/dev') {
-            sh '''
-              git config --global user.email "jiolloker@example.com"
-              git config --global user.name "jiolloker"
-              ssed -i \"s/fcambres\\/webdemo:v[0-9]\\+\\.[0-9]\\+/fcambres\\/webdemo:$BUILD_NUMBER/g\" deployment.yml
-              git add deployment.yml
-              git commit -m \"Update image tag to $BUILD_NUMBER\"
-              git push origin master
-            '''
+            sh "sed -i 's/fcambres\\/webdemo:.*/fcambres\\/webdemo:${latest}/g' deployment.yml"
+            sh 'git config --global user.email "jiolloker@example.com"'
+            sh 'git config --global user.name "jiolloker"'
+            sh 'git add deployment.yml'
+            sh 'git commit -m "Update image tag to ${latest}"'
+            sh 'git push origin master'
             } 
           }
         }
