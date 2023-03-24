@@ -6,12 +6,8 @@ pipeline {
     NODE_VERSION = '16'
   }
   
-  agent {
-    docker {
-      image 'jiolloker/webdemo-jenkins:latest'
-      args '-u root' // Optional: run the container as root
-    }
-  }
+  agent any
+  
   stages {
 
     //Empieza Test
