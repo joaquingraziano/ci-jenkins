@@ -3,7 +3,6 @@ pipeline {
     registry = "fcambres/webdemo"
     registryCredential = 'dockerhub_id'
     dockerImage = ''
-    NODE_VERSION = '16'
   }
   
   agent any
@@ -42,17 +41,16 @@ pipeline {
         echo 'Cambiando el tag de la imagen en el deployment.yaml'
         withCredentials([gitUsernamePassword(credentialsId: 'my-git-user', gitToolName: 'git-tool')]) {
         script {
-          def json = sh(script: 'curl -s https://hub.docker.com/v2/repositories/fcambres/webdemo/tags/', returnStdout: true)
-          def tags = readJSON(text: json).results.name
-          def latest = tags[0]
-          echo "La última versión de la imagen es: ${latest}"
+          echo "La última versión de la imagen es: ${BUILD_NUMBER}"
           dir('manifiestos-eks/dev') {
-            sh "sed -i 's/fcambres\\/webdemo:.*/fcambres\\/webdemo:${latest}/g' deployment.yml"
-            sh 'git config --global user.email "jiolloker@example.com"'
-            sh 'git config --global user.name "jiolloker"'
-            sh 'git add deployment.yml'
-            sh 'git commit -m "Update image tag to ${latest}"'
-            sh 'git push origin master'
+            sh """
+            sed -i 's/fcambres\\/webdemo:.*/fcambres\\/webdemo:"${BUILD_NUMBER}"/g' deployment.yml
+            git config --global user.email 'jiolloker@example.com'
+            git config --global user.name 'jiolloker'
+            git add deployment.yml
+            git commit -m 'Update image tag to ${BUILD_NUMBER}'
+            git push origin master
+            """
             } 
           }
         }
