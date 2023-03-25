@@ -49,7 +49,7 @@ pipeline {
             git config --global user.name 'jiolloker'
             git add deployment.yml
             git commit -m 'Update image tag to ${BUILD_NUMBER}'
-            git push origin master
+            git push
             """
             } 
           }
