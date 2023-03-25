@@ -18,7 +18,7 @@ services:
     ports:
       - "2376:2376"
   jenkins:
-    image: jiolloker/webdemo-jenkins:latest
+    image: jenkins/jenkins:latest
     container_name: jenkins
     restart: always
     networks:
