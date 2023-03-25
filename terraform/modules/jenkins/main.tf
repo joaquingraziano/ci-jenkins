@@ -31,13 +31,6 @@ module "ec2_instance" {
     sudo systemctl enable docker
     sudo systemctl start docker
     sudo usermod -aG docker ubuntu
-    newgrp docker
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-    curl -LJO https://raw.githubusercontent.com/Jiolloker/webdemo/master/terraform/modules/jenkins/docker-compose.yaml
-    docker-compose up -d
-    EOF
-  /*
     sudo apt install default-jre -y
     sudo wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
     sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list' -y
@@ -47,6 +40,23 @@ module "ec2_instance" {
     sudo usermod -aG docker jenkins
     sudo systemctl start jenkins
     sudo npm install -g ts-jest
+    sudo npm install -g n 
+    sudo n lts
+    sudo npm install -g jest
+    sudo npm install jest --save-dev
+    sudo npm install --save-dev ts-jest
+    sudo npm install --save-dev @types/jest
+    newgrp docker
+
+
+    EOF
+  /*
+
+
+    curl -LJO https://raw.githubusercontent.com/Jiolloker/webdemo/master/terraform/modules/jenkins/docker-compose.yaml
+    docker-compose up -d
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
 
 
 
