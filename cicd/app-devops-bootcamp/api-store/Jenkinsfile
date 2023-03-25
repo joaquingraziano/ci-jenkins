@@ -41,15 +41,15 @@ pipeline {
         echo 'Cambiando el tag de la imagen en el deployment.yaml'
         withCredentials([gitUsernamePassword(credentialsId: 'my-git-user', gitToolName: 'git-tool')]) {
         script {
-          echo "La última versión de la imagen es: ${BUILD_NUMBER}"
+          echo "La última versión de la imagen es: v1.${BUILD_NUMBER}"
           dir('manifiestos-eks/dev') {
             sh """
-            sed -i 's/fcambres\\/webdemo:.*/fcambres\\/webdemo:"${BUILD_NUMBER}"/g' deployment.yml
+            sed -i 's/fcambres\\/webdemo:.*/fcambres\\/webdemo:v1."${BUILD_NUMBER}"/g' deployment.yml
             git config --global user.email 'jiolloker@example.com'
             git config --global user.name 'jiolloker'
             git add deployment.yml
-            git commit -m 'Update image tag to ${BUILD_NUMBER}'
-            git push
+            git commit -m 'Update image tag to v1.${BUILD_NUMBER}'
+            git push origin master
             """
             } 
           }
