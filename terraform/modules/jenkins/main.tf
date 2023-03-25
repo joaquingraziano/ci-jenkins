@@ -47,8 +47,6 @@ module "ec2_instance" {
     sudo npm install --save-dev ts-jest
     sudo npm install --save-dev @types/jest
     newgrp docker
-
-
     EOF
   /*
 
