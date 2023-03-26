@@ -35,28 +35,6 @@ pipeline {
       }
     }
     //Finaliza Stage Build
-    //Inicia Stage change tag
-    stage('Change tag to deployment.yaml') {
-      steps {
-        echo 'Cambiando el tag de la imagen en el deployment.yaml'
-        withCredentials([gitUsernamePassword(credentialsId: 'my-git-user', gitToolName: 'git-tool')]) {
-        script {
-          echo "La última versión de la imagen es: v1.${BUILD_NUMBER}"
-          dir('manifiestos-eks/dev') {
-            sh """
-            sed -i 's/fcambres\\/webdemo:.*/fcambres\\/webdemo:v1."${BUILD_NUMBER}"/g' deployment.yml
-            git config --global user.email 'jiolloker@example.com'
-            git config --global user.name 'jiolloker'
-            git add deployment.yml
-            git commit -m 'Update image tag to v1.${BUILD_NUMBER}'
-            git push origin master
-            """
-            } 
-          }
-        }
-      }
-    }
-
     
     //Inicia Stage Push
     stage('Push Image') {
@@ -70,6 +48,33 @@ pipeline {
       }
     }
     //Finaliza Stage Push
+        stage('Update Deployment') {
+            steps {
+                script {
+                    // Clone GitHub repo
+                    git branch: 'master', url: 'https://github.com/Jiolloker/manifest-eks'  
+                    // Cambia el nombre del repo
+                    // Update Deployment
+                    sh 'chmod u+w dev/deployment.yml'
+                    def deploymentFile = 'dev/deployment.yml'
+                    def deploymentContent = readFile(deploymentFile)
+                    def updatedDeploymentContent = deploymentContent.replaceAll('fcambres/webdemo:v1.*', "fcambres/webdemo:v1.${"$BUILD_NUMBER"}")
+                    writeFile file: deploymentFile, text: updatedDeploymentContent
+                    sh 'cat dev/deployment.yml'
+
+                    // Push changes to GitHub
+                    withCredentials([gitUsernamePassword(credentialsId: 'github_id', gitToolName: 'git-tool')]){
+                        sh 'git config --global user.email "fncambres@example.com"'
+                        sh 'git config --global user.name "fncambres"'
+                        sh 'git status'
+                        sh 'git add -v dev/deployment.yml'
+                        sh 'git commit -v -m "Update deployment"'
+                        sh 'git push origin master'
+                    }
+                }
+            }
+        }
+
     //Empieza Limpieza
     stage('Cleaning Image') {
       steps{
@@ -80,4 +85,3 @@ pipeline {
     //Finaliza Limpieza
   }
 }
-
