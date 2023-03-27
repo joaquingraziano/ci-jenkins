@@ -52,36 +52,37 @@ pipeline {
             steps {
                 script {
                     // Clone GitHub repo
+                    sh "rm manifest-eks -R"
                     git branch: 'master', url: 'https://github.com/Jiolloker/manifest-eks'  
                     // Cambia el nombre del repo
                     // Update Deployment
-                    sh 'chmod u+w dev/deployment.yml'
-                    def deploymentFile = 'dev/deployment.yml'
+                    sh 'chmod u+w dev/app/deployment.yml'
+                    def deploymentFile = 'dev/app/deployment.yml'
                     def deploymentContent = readFile(deploymentFile)
                     def updatedDeploymentContent = deploymentContent.replaceAll('fcambres/webdemo:v1.*', "fcambres/webdemo:v1.${"$BUILD_NUMBER"}")
                     writeFile file: deploymentFile, text: updatedDeploymentContent
-                    sh 'cat dev/deployment.yml'
+                    sh 'cat dev/app/deployment.yml'
 
                     // Push changes to GitHub
                     withCredentials([gitUsernamePassword(credentialsId: 'github_id', gitToolName: 'git-tool')]){
-                        sh 'git config --global user.email "fncambres@example.com"'
-                        sh 'git config --global user.name "fncambres"'
+                        sh 'git config --global user.email "jiolloker@example.com"'
+                        sh 'git config --global user.name "jiolloker"'
                         sh 'git status'
-                        sh 'git add -v dev/deployment.yml'
+                        sh 'git add -v dev/app/deployment.yml'
                         sh 'git commit -v -m "Update deployment"'
                         sh 'git push origin master'
                     }
                 }
             }
         }
+  }
+}
 
-    //Empieza Limpieza
-    stage('Cleaning Image') {
-      steps{
+post {
+  always {
+    //limpia imagenes
+      echo 'Se limpian las imagenes pusheadas'
       sh "docker rmi $registry:v1.$BUILD_NUMBER"
       sh "docker rmi registry.hub.docker.com/$registry:v1.$BUILD_NUMBER"
-      }
-    }
-    //Finaliza Limpieza
   }
 }
