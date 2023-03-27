@@ -52,6 +52,7 @@ pipeline {
             steps {
                 script {
                     // Clone GitHub repo
+                    sh "rm /var/lib/jenkins/workspace/dev-webdemo/manifest-eks -R"
                     git branch: 'master', url: 'https://github.com/Jiolloker/manifest-eks'  
                     // Cambia el nombre del repo
                     // Update Deployment
@@ -83,6 +84,6 @@ post {
       echo 'Se limpian las imagenes pusheadas'
       sh "docker rmi $registry:v1.$BUILD_NUMBER"
       sh "docker rmi registry.hub.docker.com/$registry:v1.$BUILD_NUMBER"
-      sh "rm manifest-eks -R"
+      sh "rm /var/lib/jenkins/workspace/dev-webdemo/manifest-eks -R"
   }
 }
