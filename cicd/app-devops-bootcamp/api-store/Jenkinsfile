@@ -38,7 +38,10 @@ pipeline {
         echo 'Haciendo el Build de la app'
         script {
           dir('cicd/app-devops-bootcamp/api-store') {
-            docker.build registry + ":v1.$BUILD_NUMBER"
+            withDockerServer([uri: "tcp://docker:2376"]) {
+              docker.build registry + ":v1.$BUILD_NUMBER"
+            }
+            //docker.build registry + ":v1.$BUILD_NUMBER"
           }
         }
       } 

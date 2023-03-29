@@ -4,7 +4,7 @@ services:
   docker:
     image: docker:dind
     privileged: true
-    container_name: jenkins_docker
+    container_name: jenkins_dockerd
     restart: always
     networks:
       jenkins:
@@ -18,8 +18,8 @@ services:
     ports:
       - "2376:2376"
   jenkins:
-    image: jenkins/jenkins:latest
-    container_name: jenkins
+    image: jiolloker/webdemo-jenkins:latest
+    container_name: jenkinsd
     restart: always
     networks:
       - jenkins
@@ -30,6 +30,7 @@ services:
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8080:8080"
       - "50000:50000"
