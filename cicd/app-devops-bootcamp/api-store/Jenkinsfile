@@ -4,6 +4,9 @@ pipeline {
     registryCredential = 'dockerhub_id'
     dockerImage = ''
   }
+  parameters {
+    string(name: 'WORKPLACE', description: 'workplace environment')
+  }
   
   agent any
   
@@ -12,14 +15,20 @@ pipeline {
     //Empieza Test
     stage('Test') {
       steps {
-         script {
-          dir('cicd/app-devops-bootcamp/api-store') {
-            sh 'npm install'
-            sh 'npm run test'
+        script {
+          nodejs(nodeJSInstallationName: "nodejs_for_test"){
+            echo 'Testing app for building stage...'
+            echo "WORKPLACE: ${params.WORKPLACE}"
+            sh """
+            cd cicd/app-devops-bootcamp/api-store
+            npm install
+            npm run test
+            """
           }
         }
       }
     }
+    
        
     //Finaliza test
     
@@ -48,42 +57,41 @@ pipeline {
       }
     }
     //Finaliza Stage Push
-        stage('Update Deployment') {
-            steps {
-                script {
-                    // Clone GitHub repo
-                    git branch: 'master', url: 'https://github.com/Jiolloker/manifest-eks'  
-                    // Cambia el nombre del repo
-                    // Update Deployment
-                    sh 'chmod u+w prod/app/deployment.yml'
-                    def deploymentFile = 'prod/app/deployment.yml'
-                    def deploymentContent = readFile(deploymentFile)
-                    def updatedDeploymentContent = deploymentContent.replaceAll('fcambres/webdemo:v1.*', "fcambres/webdemo:v1.${"$BUILD_NUMBER"}")
-                    writeFile file: deploymentFile, text: updatedDeploymentContent
-                    sh 'cat prod/app/deployment.yml'
+    stage('Update Deployment') {
+      steps {
+        script {
+          // Clone GitHub repo
+          git branch: 'master', url: 'https://github.com/Jiolloker/manifest-eks'  
+          // Cambia el nombre del repo
+          // Update Deployment
+          sh "chmod u+w ${params.WORKPLACE}/app/deployment.yml"
+          def deploymentFile = "${params.WORKPLACE}/app/deployment.yml"
+          def deploymentContent = readFile(deploymentFile)
+          def updatedDeploymentContent = deploymentContent.replaceAll('fcambres/webdemo:v1.*', "fcambres/webdemo:v1.${"$BUILD_NUMBER"}")
+          writeFile file: deploymentFile, text: updatedDeploymentContent
+          sh "cat ${params.WORKPLACE}/app/deployment.yml"
 
-                    // Push changes to GitHub
-                    withCredentials([gitUsernamePassword(credentialsId: 'github_id', gitToolName: 'git-tool')]){
-                        sh 'git config --global user.email "jiolloker@example.com"'
-                        sh 'git config --global user.name "jiolloker"'
-                        sh 'git status'
-                        sh 'git add -v prod/app/deployment.yml'
-                        sh 'git commit -v -m "Update deployment"'
-                        sh 'git push origin master'
-                    }
-                }
-            }
-        }
-  }
-        post {
-          always {
-        //limpia imagenes
-              echo 'Se limpian las imagenes pusheadas'
-              sh "docker rmi $registry:v1.$BUILD_NUMBER"
-              sh "docker rmi registry.hub.docker.com/$registry:v1.$BUILD_NUMBER"
-              
+          // Push changes to GitHub
+          withCredentials([gitUsernamePassword(credentialsId: 'github_id', gitToolName: 'git-tool')]){
+            sh """
+            git config --global user.email "jiolloker@example.com"
+            git config --global user.name "jiolloker"
+            git status'
+            git add -v ${params.WORKPLACE}/app/deployment.yml"
+            git commit -v -m 'Update deployment of ${params.WORKPLACE} with build number v1.$BUILD_NUMBER'
+            git push origin master
+            """
           }
         }
-
+      }
+    }
+    post {
+      always {
+        //limpia imagenes
+        echo 'Se limpian las imagenes pusheadas'
+        sh "docker rmi $registry:v1.$BUILD_NUMBER"
+        sh "docker rmi registry.hub.docker.com/$registry:v1.$BUILD_NUMBER"
+      }
+    }
+  }
 }
-

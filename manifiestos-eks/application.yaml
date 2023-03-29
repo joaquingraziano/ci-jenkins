@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/Jiolloker/manifest-eks.git ####
     targetRevision: HEAD
-    path: dev/ ####
+    path: dev/app/ ####
   destination: 
     server: https://kubernetes.default.svc
     namespace: dev-myshoppingweb   ####
