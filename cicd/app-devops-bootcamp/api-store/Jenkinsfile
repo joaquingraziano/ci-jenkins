@@ -35,10 +35,12 @@ pipeline {
     //Inicia Stage Build
     stage('build Image') {
       steps {
-        echo 'Haciendo el Build de la app'
-        script {
-          dir('cicd/app-devops-bootcamp/api-store') {
-            docker.build registry + ":v1.$BUILD_NUMBER"
+        docker(dockerInstallationName: "dockeragent"){
+          echo 'Haciendo el Build de la app'
+          script {
+            dir('cicd/app-devops-bootcamp/api-store') {
+              docker.build registry + ":v1.$BUILD_NUMBER"
+            }
           }
         } 
       }
