@@ -80,8 +80,8 @@ pipeline {
             sh """
             git config --global user.email "jiolloker@example.com"
             git config --global user.name "jiolloker"
-            git status'
-            git add -v ${params.WORKPLACE}/app/deployment.yml"
+            git status
+            git add -v "${params.WORKPLACE}/app/deployment.yml"
             git commit -v -m 'Update deployment of ${params.WORKPLACE} with build number v1.$BUILD_NUMBER'
             git push origin master
             """
