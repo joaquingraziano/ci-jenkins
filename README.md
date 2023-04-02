@@ -1,35 +1,42 @@
-##Tools installation on a linux machine
-Install eksctl
+# Tools installation on a linux machine
+Minikube, jenkins, argoCD, docker, eksctl, kubectl, aws-cli, curl, git, docker-compose.
+
+
+Levantar Jenkins con docker-compose.
 ```
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-eksctl version
-```
-Install kubectl
-```
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-kubectl version --client
-```
-Install aws-cli
-```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
+cd webdemo/terraform/yaml
+docker-compose up -d
 ```
 
-##Enviroment setting for AWS
+Levantar Minikube
 ```
-aws configure --profile username
-input access key
-input secret key
-input region
-input format
-vim ~/.aws/credentials  # check your credentials
-on provider.tf change the profile_name for yours
+minikube start
 ```
+
+# Instalar ArgoCD in k8s
+```
+minikube kubectl -- create namespace argocd
+minikube kubectl -- apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+# acceder ArgoCD UI
+```
+minikube -- kubectl get svc -n argocd
+minikube -- kubectl port-forward svc/argocd-server 8080:443 -n argocd
+```
+# login with admin user and below token (as in documentation):
+```
+minikube kubectl -- -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+```
+
+
+
+
+
+
+
+
+
+
 
 
 ## To deploy the infrastructure
