@@ -21,6 +21,8 @@ pipeline {
             echo "WORKPLACE: ${params.WORKPLACE}"
             git branch: 'master', url: 'https://github.com/edgaregonzalez/app-devops-bootcamp'  
             sh """
+            pwd
+            ls
             cd app-devops-bootcamp/api-store
             curl -LJO https://raw.githubusercontent.com/Jiolloker/webdemo/master/cicd/app-devops-bootcamp/api-store/Dockerfile
             npm install
