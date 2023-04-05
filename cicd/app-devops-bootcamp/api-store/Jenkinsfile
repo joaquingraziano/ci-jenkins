@@ -23,7 +23,7 @@ pipeline {
             sh """
             pwd
             ls
-            cd app-devops-bootcamp/api-store
+            cd api-store
             curl -LJO https://raw.githubusercontent.com/Jiolloker/webdemo/master/cicd/app-devops-bootcamp/api-store/Dockerfile
             npm install
             npm run test
@@ -41,7 +41,7 @@ pipeline {
       steps {
         echo 'Haciendo el Build de la app'
         script {
-          dir('app-devops-bootcamp/api-store') {
+          dir('api-store') {
             docker.build registry + ":v1.$BUILD_NUMBER"
           }
         }
