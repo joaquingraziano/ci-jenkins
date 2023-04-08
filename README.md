@@ -1,32 +1,96 @@
 # Tools installation on a linux machine
-Minikube, jenkins, argoCD, docker, eksctl, kubectl, aws-cli, curl, git, docker-compose.
 
+<br>
 
-Levantar Jenkins con docker-compose.
-```
+- Minikube
+- jenkins
+- argoCD
+- docker
+- eksctl
+- kubectl
+- aws-cli
+- curl
+- git
+- docker-compose
+
+<br>
+<br>
+
+## Levantar Jenkins con docker-compose.
+---
+
+<br>
+
+```bash
 cd webdemo/terraform/yaml
+```
+```bash
 docker-compose up -d
 ```
 
-Levantar Minikube
+## Plugins y herramientas a instalar en jenkins
+
+- configurar credenciales github_id dockerhub_id
+- instalar plugins nodejs , docker , gitpush 
+- en la configuracion de node js en el name ponerle nodejs_for_test
+- en la configuracion de docker (configure clouds)  tcp://docker:2376
+- se debe generar una credencial del tipo secret text con el nombre snyktoken y el token correspondiente de la cuenta de snyk (esto esta declarado en el stage snyk scan )
+- lo mismo para el stage de issue se debe generar un secret text con el nombre token-github y el token correspondiente de github (esto se declarar en el stage issues)
+- otro tema:  no pude hacer andar el plugin de snyk entonces  hice lo siguiente conectado dentro del contenedor de jenkins : 
+
+```bash
+wget https://github.com/snyk/snyk/releases/download/v1.667.0/snyk-linux
+chmod +x snyk-linux
+sudo mv snyk-linux /usr/local/bin/snyk
+```
+- el plugin se snyk en si lo tengo instalado pero en un momento no me funciono y fui por esto que les comente mas arriba , despues toque una configuracion mas pero para ese entonces ya lo habia instalado a mano
+
+<br>
+
+
+## Levantar Minikube
+---
+<br>
+
 ```
 minikube start
 ```
 
-# Instalar ArgoCD in k8s
+<br>
+
+## Instalar ArgoCD in k8s
+---
+<br>
+
 ```
 minikube kubectl -- create namespace argocd
+```
+```bash
 minikube kubectl -- apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
-# acceder ArgoCD UI
-```
+<br>
+
+## Acceder ArgoCD UI
+---
+<br>
+
+```bash
 minikube -- kubectl get svc -n argocd
+```
+```bash
 minikube -- kubectl port-forward svc/argocd-server 8080:443 -n argocd
 ```
-# login with admin user and below token (as in documentation):
+<br>
+
+## Login with admin user and below token (as in documentation):
+---
+
+<br>
+
 ```
 minikube kubectl -- -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
 ```
+<br>
 
 
 
