@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "fcambres/webdemo"
+    registry = "jgraziano/webdemo"
     registryCredential = 'dockerhub_id'
     dockerImage = ''
   }
@@ -24,7 +24,7 @@ pipeline {
             pwd
             ls
             cd api-store
-            curl -LJO https://raw.githubusercontent.com/Jiolloker/webdemo/master/cicd/app-devops-bootcamp/api-store/Dockerfile
+            curl -LJO https://raw.githubusercontent.com/joaquingraziano/ci-jenkins/master/cicd/app-devops-bootcamp/api-store/Dockerfile
             npm install
             npm run test
             """
@@ -33,7 +33,7 @@ pipeline {
       }
     }
     
-       
+    
     //Finaliza test
     
     //Inicia Stage Build
@@ -89,7 +89,7 @@ pipeline {
         echo 'Haciendo un Push a la registry de docker'
         script {
           docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub_id') {
-          docker.image("fcambres/webdemo:v1.$BUILD_NUMBER").push()
+          docker.image("jgraziano/webdemo:v1.$BUILD_NUMBER").push()
           }
         }
       }
@@ -109,25 +109,25 @@ pipeline {
       steps {
         script {
           // Clone GitHub repo
-          git branch: 'master', url: 'https://github.com/Jiolloker/manifest-eks'  
+          git branch: 'main', url: 'https://github.com/joaquingraziano/argocd'  
           // Cambia el nombre del repo
           // Update Deployment
           sh "chmod u+w ${params.WORKPLACE}/app/deployment.yml"
           def deploymentFile = "${params.WORKPLACE}/app/deployment.yml"
           def deploymentContent = readFile(deploymentFile)
-          def updatedDeploymentContent = deploymentContent.replaceAll('fcambres/webdemo:v1.*', "fcambres/webdemo:v1.${"$BUILD_NUMBER"}")
+          def updatedDeploymentContent = deploymentContent.replaceAll('jgraziano/webdemo:v1.*', "jgraziano/webdemo:v1.${"$BUILD_NUMBER"}")
           writeFile file: deploymentFile, text: updatedDeploymentContent
           sh "cat ${params.WORKPLACE}/app/deployment.yml"
 
           // Push changes to GitHub
           withCredentials([gitUsernamePassword(credentialsId: 'github_id', gitToolName: 'git-tool')]){
             sh """
-            git config --global user.email "jiolloker@example.com"
-            git config --global user.name "jiolloker"
+            git config --global user.email "jgraziano@example.com"
+            git config --global user.name "jgraziano"
             git status
             git add -v "${params.WORKPLACE}/app/deployment.yml"
             git commit -v -m 'Update deployment of ${params.WORKPLACE} with build number v1.$BUILD_NUMBER'
-            git push origin master
+            git push origin main
             """
           }
         }
