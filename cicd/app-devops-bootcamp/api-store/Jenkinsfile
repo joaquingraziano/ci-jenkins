@@ -50,18 +50,6 @@ pipeline {
     
     //Finaliza Stage Build
     
-    //Inicia Stage Push
-    stage('Push Image') {
-      steps {
-        echo 'Haciendo un Push a la registry de docker'
-        script {
-          docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub_id') {
-          docker.image("fcambres/webdemo:v1.$BUILD_NUMBER").push()
-          }
-        }
-      }
-    }
-    //Finaliza Stage Push
     // Agregado Stage Snyk Scan
     stage('Snyk Scan') {
       steps {
@@ -71,7 +59,7 @@ pipeline {
         }
       }
     }
-   
+    
 
     // Agregado Stage Snyk Issue
     stage('Snyk Issue') {
@@ -88,9 +76,36 @@ pipeline {
         }
       }
     }
+    
+    //Inicia Stage Push
+    stage('Push Image') {
+      when {
+        expression {
+          def report = readJSON file: 'snyk_report.json'
+          return !report.vulnerabilities.any { it.severity == "high" }
+        }
+      }
+      steps {
+        echo 'Haciendo un Push a la registry de docker'
+        script {
+          docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub_id') {
+          docker.image("fcambres/webdemo:v1.$BUILD_NUMBER").push()
+          }
+        }
+      }
+    }
+    //Finaliza Stage Push
+
+  
 
 
     stage('Update Deployment') {
+      when {
+        expression {
+          def report = readJSON file: 'snyk_report.json'
+          return !report.vulnerabilities.any { it.severity == "high" }
+        }
+      }
       steps {
         script {
           // Clone GitHub repo
