@@ -52,9 +52,10 @@ pipeline {
             steps {
                 script {
                     // Clone GitHub repo
-                    git branch: 'master', url: 'https://github.com/joaquingraziano/argocd'  
+                    git branch: 'master', url: 'https://github.com/joaquingraziano/argocd.git'  
                     // Cambia el nombre del repo
                     // Update Deployment
+                    sh 'ls -l'
                     sh 'chmod u+w dev/app/deployment.yml'
                     def deploymentFile = 'dev/app/deployment.yml'
                     def deploymentContent = readFile(deploymentFile)
