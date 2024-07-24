@@ -5,7 +5,7 @@ RUN npm install
 COPY . .
 RUN npm run build 
 
-FROM nginx:mainline-alpine-slim AS production 
+FROM nginx:1.27.0-alpine3.19-slim AS production 
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
